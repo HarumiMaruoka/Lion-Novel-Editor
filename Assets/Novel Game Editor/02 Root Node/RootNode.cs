@@ -19,6 +19,11 @@ namespace Glib.NovelGameEditor
 
         public override Type NodeViewType => typeof(RootNodeView);
 
+        public override void Initialize(NovelGameController controller)
+        {
+
+        }
+
         public void OutputConnect(Node child)
         {
             _child = child;

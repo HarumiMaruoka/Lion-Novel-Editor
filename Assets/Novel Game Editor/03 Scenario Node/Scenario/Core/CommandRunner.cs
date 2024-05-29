@@ -1,56 +1,59 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Glib.NovelGameEditor.Scenario.Commands
 {
-    public class CommandRunner : MonoBehaviour
+    [Serializable]
+    public class CommandRunner
     {
-        // Sample code
-        [SerializeField]
         private NovelGameController _controller;
 
-        // Sample code
-        public void Start()
+        private string _sheet =
+            @"[BeginGroup]
+              [FadeScreen, 0, 1]
+              [PrintText, Hello, 0.1]
+              [EndGroup]
+              
+              [ChangeCaption, Shinohara]
+              [PrintText, Hello1, 0.1]
+              
+              [ChangeCaption, Nakazawa]
+              [PrintText, Hello2, 0.1]
+              
+              [ChangeCaption, Maruoka]
+              [PrintText, Hello3, 0.1]
+              
+              [ChangeCaption,Reo]
+              [PrintText, Hello4, 0.1]
+              
+              [BeginGroup]
+              [FadeScreen, 1, 1]
+              [ChangeCaption, Nakazawa Reo]
+              [PrintText, HelloHelloHello, 0.1]
+              [EndGroup]";
+
+        private ICommand[] _commands;
+
+        public bool IsFinished { get; private set; } = false;
+
+        public void Initialize(NovelGameController controller)
         {
-            var sheet =
-                @"[BeginGroup]
-                  [FadeScreen, 0, 1]
-                  [PrintText, Hello, 0.1]
-                  [EndGroup]
-
-                  [ChangeCaption, Shinohara]
-                  [PrintText, Hello1, 0.1]
-
-                  [ChangeCaption, Nakazawa]
-                  [PrintText, Hello2, 0.1]
-
-                  [ChangeCaption, Maruoka]
-                  [PrintText, Hello3, 0.1]
-
-                  [ChangeCaption,Reo]
-                  [PrintText, Hello4, 0.1]
-
-                  [BeginGroup]
-                  [FadeScreen, 1, 1]
-                  [ChangeCaption, Nakazawa Reo]
-                  [PrintText, HelloHelloHello, 0.1]
-                  [EndGroup]";
-
-            Play(sheet, _controller.Config);
+            _controller = controller;
+            _commands = CommandLoader.LoadSheet(_sheet, _controller.Config);
         }
 
-        public void Play(string sheetData, Config config)
+        public void Play(CancellationToken token = default)
         {
-            var commands = CommandLoader.LoadSheet(sheetData, config);
-            var executable = MakeExecutable(commands);
-            RunCommands(executable);
+            IsFinished = false;
+            var executable = MakeExecutable(_commands);
+            RunCommands(executable, token);
         }
 
-
-        public async void RunCommands(List<List<ICommand>> executable)
+        public async void RunCommands(List<List<ICommand>> executable, CancellationToken token)
         {
-            var token = this.GetCancellationTokenOnDestroy();
             for (int i = 0; i < executable.Count; i++)
             {
                 UniTask[] tasks = new UniTask[executable[i].Count];
@@ -61,6 +64,8 @@ namespace Glib.NovelGameEditor.Scenario.Commands
                 await UniTask.WhenAll(tasks);
                 if (token.IsCancellationRequested) return;
             }
+
+            IsFinished = true;
         }
 
         private List<List<ICommand>> MakeExecutable(ICommand[] commands)

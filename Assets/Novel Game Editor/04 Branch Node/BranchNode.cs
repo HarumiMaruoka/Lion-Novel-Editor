@@ -65,6 +65,11 @@ namespace Glib.NovelGameEditor
 
         private int _currentElementIndex = 0;
 
+        public override void Initialize(NovelGameController controller)
+        {
+
+        }
+
         public override void OnEnter()
         {
             _currentElementIndex = 0;

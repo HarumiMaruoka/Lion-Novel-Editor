@@ -9,5 +9,6 @@ namespace Glib.NovelGameEditor
     {
         public Text Caption;
         public Text TextBox;
+        public Image FadeImage;
     }
 }

@@ -5,18 +5,18 @@ namespace Glib.NovelGameEditor.Scenario.Commands
 {
     public class ChangeCaption : ICommand
     {
+        private Config _config;
         private string _caption;
 
         public ChangeCaption(Config config, string[] commandArgs)
         {
+            _config = config;
             _caption = commandArgs[0];
         }
 
-#pragma warning disable 1998
         public async UniTask RunCommand(CancellationToken token = default)
         {
-
+            _config.Caption.text = _caption;
         }
-#pragma warning restore 1998
     }
 }

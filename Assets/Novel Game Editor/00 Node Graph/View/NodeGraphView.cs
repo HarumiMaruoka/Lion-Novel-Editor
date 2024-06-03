@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace Glib.NovelGameEditor
             var constructor = nodeViewType.GetConstructor(new[] { typeof(NodeGraphView), typeof(Node), typeof(Vector2) });
             if (constructor != null)
             {
-                var instance= constructor.Invoke(new object[] { this, node, initialPos });
+                var instance = constructor.Invoke(new object[] { this, node, initialPos });
                 nodeView = (NodeView)instance;
             }
             else
@@ -284,3 +285,4 @@ namespace Glib.NovelGameEditor
         }
     }
 }
+#endif

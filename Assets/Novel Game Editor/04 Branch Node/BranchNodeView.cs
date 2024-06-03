@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
@@ -87,3 +88,4 @@ namespace Glib.NovelGameEditor
         }
     }
 }
+#endif

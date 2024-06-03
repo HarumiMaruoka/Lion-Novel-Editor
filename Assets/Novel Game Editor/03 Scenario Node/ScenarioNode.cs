@@ -9,8 +9,10 @@ namespace Glib.NovelGameEditor
     public class ScenarioNode : Node, IMultiParent, ISingleChild
     {
         #region Parent Child Connection
-        public override Type NodeViewType => typeof(ScenarioNodeView);
 
+#if UNITY_EDITOR
+        public override Type NodeViewType => typeof(ScenarioNodeView);
+#endif
         public Node Node => this;
 
         [SerializeField]

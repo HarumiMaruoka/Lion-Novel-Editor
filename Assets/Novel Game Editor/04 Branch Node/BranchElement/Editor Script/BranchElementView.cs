@@ -1,4 +1,4 @@
-// 日本語対応
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -63,3 +63,4 @@ namespace Glib.NovelGameEditor
         }
     }
 }
+#endif

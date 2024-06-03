@@ -17,10 +17,12 @@ namespace Glib.NovelGameEditor
         {
             get
             {
+#if UNITY_EDITOR
                 if (string.IsNullOrEmpty(_guid))
                 {
                     _guid = UnityEditor.GUID.Generate().ToString();
                 }
+#endif
 
                 return _guid;
             }

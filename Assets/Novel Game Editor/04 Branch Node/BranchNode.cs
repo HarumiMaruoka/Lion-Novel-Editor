@@ -29,7 +29,9 @@ namespace Glib.NovelGameEditor
         public IReadOnlyList<BranchElement> Elements => _elements;
         public List<Node> Parents => _parents;
 
+#if UNITY_EDITOR
         public override Type NodeViewType => typeof(BranchNodeView);
+#endif
 
         public void InputConnect(Node parent)
         {

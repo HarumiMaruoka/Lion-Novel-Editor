@@ -1,4 +1,4 @@
-// 日本語対応
+#if UNITY_EDITOR
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,3 +20,4 @@ namespace Glib.NovelGameEditor
         public IOutputNode OutputConnectable => _node;
     }
 }
+#endif

@@ -17,7 +17,9 @@ namespace Glib.NovelGameEditor
 
         protected NovelGameController _controller;
 
+#if UNITY_EDITOR
         public abstract Type NodeViewType { get; }
+#endif
 
         public NodeViewData ViewData => _viewData ??= new NodeViewData();
         public string NodeName => _nodeName;

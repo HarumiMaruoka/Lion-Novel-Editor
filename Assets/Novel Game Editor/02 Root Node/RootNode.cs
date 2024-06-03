@@ -1,4 +1,3 @@
-// 日本語対応
 using System;
 using UnityEngine;
 
@@ -17,7 +16,9 @@ namespace Glib.NovelGameEditor
         public Node Node => this;
         public Node Child { get => _child; set => _child = value; }
 
+#if UNITY_EDITOR
         public override Type NodeViewType => typeof(RootNodeView);
+#endif
 
         public override void Initialize(NovelGameController controller)
         {

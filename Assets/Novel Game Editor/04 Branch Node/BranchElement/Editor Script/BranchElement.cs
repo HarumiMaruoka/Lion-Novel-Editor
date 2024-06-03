@@ -1,4 +1,3 @@
-// 日本語対応
 using System;
 using UnityEngine;
 
@@ -22,7 +21,10 @@ namespace Glib.NovelGameEditor
 
         public Node Node => this;
 
+#if UNITY_EDITOR
         public override Type NodeViewType => typeof(BranchNodeView);
+#endif
+
         public override void Initialize(NovelGameController controller)
         {
 

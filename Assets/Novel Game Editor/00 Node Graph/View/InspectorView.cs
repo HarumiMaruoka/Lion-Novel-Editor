@@ -1,4 +1,4 @@
-// 日本語対応
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -27,3 +27,4 @@ namespace Glib.NovelGameEditor
         }
     }
 }
+#endif

@@ -3,14 +3,14 @@ using System.Threading;
 
 namespace Glib.NovelGameEditor.Scenario.Commands
 {
-    public class BackgroundAction : ICommand
+    public class BackgroundAction : CommandBase
     {
-        public BackgroundAction(Config config, string[] commandArgs)
+        public BackgroundAction(Config config, string[] commandArgs) : base(config, commandArgs)
         {
 
         }
 
-        public async UniTask RunCommand(CancellationToken token = default)
+        public override async UniTask RunCommand(CancellationToken token = default)
         {
 
         }

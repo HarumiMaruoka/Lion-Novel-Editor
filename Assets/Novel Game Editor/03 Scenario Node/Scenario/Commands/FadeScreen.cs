@@ -3,20 +3,18 @@ using System.Threading;
 
 namespace Glib.NovelGameEditor.Scenario.Commands
 {
-    public class FadeScreen : ICommand
+    public class FadeScreen : CommandBase
     {
-        private Config _config;
         private float _targetValue;
         private float _duration;
 
-        public FadeScreen(Config config, string[] commandArgs)
+        public FadeScreen(Config config, string[] commandArgs) : base(config, commandArgs)
         {
-            _config = config;
             _targetValue = float.Parse(commandArgs[0]);
             _duration = float.Parse(commandArgs[1]);
         }
 
-        public async UniTask RunCommand(CancellationToken token = default)
+        public override async UniTask RunCommand(CancellationToken token = default)
         {
             await _config.FadeImage.FadeAsync(_targetValue, _duration, token);
         }

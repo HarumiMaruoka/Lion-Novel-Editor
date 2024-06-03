@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Glib.NovelGameEditor
 {
@@ -63,63 +64,42 @@ namespace Glib.NovelGameEditor
             return _elements[index];
         }
 
-        private int _currentElementIndex = 0;
-
         public override void Initialize(NovelGameController controller)
         {
-
+            _controller = controller;
         }
+
+        private HashSet<ChoiceView> _choices = new HashSet<ChoiceView>();
 
         public override void OnEnter()
         {
-            _currentElementIndex = 0;
-            Debug.Log(
-                $"Branch Node Enter\n" +
-                $"Node Name: {_nodeName}");
+            for (int i = 0; i < _elements.Count; i++)
+            {
+                var choiceView = _controller.Config.ChoiceViewManager.GetOrCreateChoiceView(i, _elements[i].Label);
+                choiceView.OnClick += OnClick;
+                _choices.Add(choiceView);
+            }
         }
 
         public override void OnUpdate()
         {
-            // Elementsが有効かどうかを確認する。
-            if (_elements == null)
-            {
-                Debug.Log("Elements is null");
-                return;
-            }
-            if (_elements.Count == 0)
-            {
-                Debug.Log("Elements is empty");
-                return;
-            }
 
-            // キー入力によって選択中の要素を変更する。
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                _currentElementIndex++;
-                if (_currentElementIndex >= _elements.Count)
-                {
-                    _currentElementIndex = 0;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                _currentElementIndex--;
-                if (_currentElementIndex < 0)
-                {
-                    _currentElementIndex = _elements.Count - 1;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                _controller.MoveTo(_elements[_currentElementIndex].Child);
-            }
         }
 
         public override void OnExit()
         {
-            Debug.Log(
-                $"Branch Node Exit\n" +
-                $"Node Name: {_nodeName}");
+            foreach (var choice in _choices)
+            {
+                _controller.Config.ChoiceViewManager.ReturnChoiceView(choice);
+                choice.OnClick -= OnClick;
+            }
+            _choices.Clear();
+        }
+
+        public void OnClick(int index)
+        {
+            var element = _elements[index];
+            MoveTo(element.Child);
         }
     }
 }

@@ -3,14 +3,14 @@ using System.Threading;
 
 namespace Glib.NovelGameEditor.Scenario.Commands
 {
-    public class CameraAction : ICommand
+    public class CameraAction : CommandBase
     {
-        public CameraAction(Config config, string[] commandArgs)
+        public CameraAction(Config config, string[] commandArgs) : base(config, commandArgs)
         {
 
         }
 
-        public async UniTask RunCommand(CancellationToken token = default)
+        public override async UniTask RunCommand(CancellationToken token = default)
         {
 
         }

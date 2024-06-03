@@ -9,40 +9,18 @@ namespace Glib.NovelGameEditor.Scenario.Commands
     [Serializable]
     public class CommandRunner
     {
+        [SerializeField]
+        private TextAsset _commandData;
+
         private NovelGameController _controller;
-
-        private string _sheet =
-            @"[BeginGroup]
-              [FadeScreen, 0, 1]
-              [PrintText, Hello, 0.1]
-              [EndGroup]
-              
-              [ChangeCaption, Shinohara]
-              [PrintText, Hello1, 0.1]
-              
-              [ChangeCaption, Nakazawa]
-              [PrintText, Hello2, 0.1]
-              
-              [ChangeCaption, Maruoka]
-              [PrintText, Hello3, 0.1]
-              
-              [ChangeCaption,Reo]
-              [PrintText, Hello4, 0.1]
-              
-              [BeginGroup]
-              [FadeScreen, 1, 1]
-              [ChangeCaption, Nakazawa Reo]
-              [PrintText, HelloHelloHello, 0.1]
-              [EndGroup]";
-
-        private ICommand[] _commands;
+        private CommandBase[] _commands;
 
         public bool IsFinished { get; private set; } = false;
 
         public void Initialize(NovelGameController controller)
         {
             _controller = controller;
-            _commands = CommandLoader.LoadSheet(_sheet, _controller.Config);
+            _commands = CommandLoader.LoadSheet(_commandData.text, _controller.Config);
         }
 
         public void Play(CancellationToken token = default)
@@ -52,7 +30,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands
             RunCommands(executable, token);
         }
 
-        public async void RunCommands(List<List<ICommand>> executable, CancellationToken token)
+        public async void RunCommands(List<List<CommandBase>> executable, CancellationToken token)
         {
             for (int i = 0; i < executable.Count; i++)
             {
@@ -68,14 +46,14 @@ namespace Glib.NovelGameEditor.Scenario.Commands
             IsFinished = true;
         }
 
-        private List<List<ICommand>> MakeExecutable(ICommand[] commands)
+        private List<List<CommandBase>> MakeExecutable(CommandBase[] commands)
         {
             bool groupFlag = false;
-            List<List<ICommand>> result = new List<List<ICommand>>();
-            List<ICommand> currentCollection = null;
+            List<List<CommandBase>> result = new List<List<CommandBase>>();
+            List<CommandBase> group = null;
 
-            currentCollection = new List<ICommand>();
-            result.Add(currentCollection);
+            group = new List<CommandBase>();
+            result.Add(group);
 
             for (int i = 0; i < commands.Length; i++)
             {
@@ -83,6 +61,8 @@ namespace Glib.NovelGameEditor.Scenario.Commands
 
                 if (command is BeginGroup)
                 {
+                    group = new List<CommandBase>();
+                    result.Add(group);
                     groupFlag = true;
                     command = null;
                 }
@@ -94,14 +74,14 @@ namespace Glib.NovelGameEditor.Scenario.Commands
 
                 else if (!groupFlag)
                 {
-                    if (currentCollection.Count != 0)
+                    if (group.Count != 0)
                     {
-                        currentCollection = new List<ICommand>();
-                        result.Add(currentCollection);
+                        group = new List<CommandBase>();
+                        result.Add(group);
                     }
                 }
 
-                if (command != null) currentCollection.Add(command);
+                if (command != null) group.Add(command);
             }
 
             return result;

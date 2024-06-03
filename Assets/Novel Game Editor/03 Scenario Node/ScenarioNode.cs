@@ -49,6 +49,7 @@ namespace Glib.NovelGameEditor
 
         public override void Initialize(NovelGameController controller)
         {
+            _controller = controller;
             _commandRunner.Initialize(controller);
         }
 

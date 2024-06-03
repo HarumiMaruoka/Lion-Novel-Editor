@@ -1,4 +1,5 @@
 // 日本語対応
+using System.Threading;
 using UnityEngine;
 
 namespace Glib.NovelGameEditor
@@ -48,7 +49,7 @@ namespace Glib.NovelGameEditor
         {
             _current.OnExit();
             _current = node;
-            if (_current != null) _current.OnEnter();
+            if (_current) _current.OnEnter();
         }
     }
 }

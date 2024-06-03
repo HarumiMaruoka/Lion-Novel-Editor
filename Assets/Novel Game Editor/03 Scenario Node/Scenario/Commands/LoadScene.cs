@@ -4,16 +4,16 @@ using UnityEngine.SceneManagement;
 
 namespace Glib.NovelGameEditor.Scenario.Commands
 {
-    public class LoadScene : ICommand
+    public class LoadScene : CommandBase
     {
         private string _sceneName;
 
-        public LoadScene(Config config, string[] commandArgs)
+        public LoadScene(Config config, string[] commandArgs) : base(config, commandArgs)
         {
             _sceneName = commandArgs[0];
         }
 
-        public async UniTask RunCommand(CancellationToken token = default)
+        public override async UniTask RunCommand(CancellationToken token = default)
         {
             SceneManager.LoadScene(_sceneName);
         }

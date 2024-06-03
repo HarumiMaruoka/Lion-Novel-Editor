@@ -7,11 +7,11 @@ namespace Glib.NovelGameEditor.Scenario.Commands
 {
     public static class CommandLoader
     {
-        public static ICommand[] LoadSheet(string commandSheet, Config config)
+        public static CommandBase[] LoadSheet(string commandSheet, Config config)
         {
             var commandStrData = ParseCommands(commandSheet);
             var commandCount = commandStrData.Count;
-            ICommand[] commands = new ICommand[commandCount];
+            CommandBase[] commands = new CommandBase[commandCount];
 
             for (int i = 0; i < commandCount; i++)
             {
@@ -21,12 +21,12 @@ namespace Glib.NovelGameEditor.Scenario.Commands
             return commands;
         }
 
-        public static ICommand ToCommand(this string[] commandData, Config config)
+        public static CommandBase ToCommand(this string[] commandData, Config config)
         {
             string commandName = commandData[0];
             string[] commandArgs = commandData[1..];
 
-            var types = GetTypesDerivedFrom<ICommand>();
+            var types = GetTypesDerivedFrom<CommandBase>();
 
             foreach (var type in types)
             {
@@ -35,7 +35,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands
                     var constructor = type.GetConstructor(new[] { typeof(Config), typeof(string[]) });
                     if (constructor != null)
                     {
-                        return constructor.Invoke(new object[] { config, commandArgs }) as ICommand;
+                        return constructor.Invoke(new object[] { config, commandArgs }) as CommandBase;
                     }
                 }
             }

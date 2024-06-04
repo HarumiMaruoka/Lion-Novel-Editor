@@ -932,13 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActorType: 1
-  Sprites:
-  - {fileID: 21300000, guid: 2a5ce7fe255c0c349a004c052a690d5d, type: 3}
-  - {fileID: 21300000, guid: 2e80e81c84ac47244ae3c2d5c7be234e, type: 3}
-  - {fileID: 21300000, guid: c843742132808d549af8f217849a81ac, type: 3}
-  - {fileID: 21300000, guid: 2b3e3ae78dda510488a84dbb0be57d8d, type: 3}
-  - {fileID: 21300000, guid: 44eed9db4b7567a4b90f6095a3d22a47, type: 3}
-  - {fileID: 21300000, guid: d2e82804222335745a6db81d5cedbf42, type: 3}
+  Sprites: []
   Animator: {fileID: 467351598}
   ActorFrontView: {fileID: 23139349}
   ActorBackView: {fileID: 278488027}
@@ -2965,13 +2959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActorType: 0
-  Sprites:
-  - {fileID: 21300000, guid: c19e3bf1d6ff6db4f83b98c7d619a7f4, type: 3}
-  - {fileID: 21300000, guid: f0d7ad3b946be944abc5bb438801deff, type: 3}
-  - {fileID: 21300000, guid: 94468c52cd0f293418d939527d39cc11, type: 3}
-  - {fileID: 21300000, guid: 4ae43cb78c034cb469d1b4105f41f95f, type: 3}
-  - {fileID: 21300000, guid: 99ff1bf913d7cc544b3374c7716ebeb1, type: 3}
-  - {fileID: 21300000, guid: c4d818316f94a9c46a1313a9c08a5025, type: 3}
+  Sprites: []
   Animator: {fileID: 1754235310}
   ActorFrontView: {fileID: 974909809}
   ActorBackView: {fileID: 861121461}

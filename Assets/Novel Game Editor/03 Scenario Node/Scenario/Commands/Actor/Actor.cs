@@ -14,10 +14,10 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
         public RectTransform RectTransform;
         public Reaction[] Reactions;
     }
+}
 
-    public enum ActorType
-    {
-        アリス,
-        ボブ,
-    }
+public enum ActorType
+{
+    アリス,
+    ボブ,
 }

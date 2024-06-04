@@ -4,8 +4,18 @@ using UnityEngine;
 
 namespace Glib.NovelGameEditor.Scenario.Commands.Background
 {
-    public static class BackgroundExtensions
+    public class BackgroundActions
     {
+        public static async UniTask RunAction(Config config, string[] commandArgs)
+        {
+            var actionType = commandArgs[0].Trim();
+
+            switch (actionType)
+            {
+                case "Change": await Change(config, commandArgs[1..]); break;
+                default: Debug.Log($"{actionType} is missing."); break;
+            }
+        }
         public static async UniTask Change(Config config, string[] args)
         {
             var spriteName = args[0];

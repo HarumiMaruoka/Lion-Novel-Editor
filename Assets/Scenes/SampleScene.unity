@@ -143,7 +143,7 @@ MonoBehaviour:
   _parents: []
   _child: {fileID: 0}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: a38d704198dae324fa2f37457db8184c, type: 3}
+    _scenarioData: {fileID: 0}
 --- !u!1 &23139347
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
   - {fileID: 1629940981}
   _child: {fileID: 1825472115}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: 531db696f4bdaf34f9d15c3b877d23ea, type: 3}
+    _scenarioData: {fileID: 4900000, guid: 531db696f4bdaf34f9d15c3b877d23ea, type: 3}
 --- !u!1 &324050661
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ MonoBehaviour:
   - {fileID: 270851415}
   _child: {fileID: 360848548}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: 1e39c3a937c76be43b6c7831efe93aef, type: 3}
+    _scenarioData: {fileID: 4900000, guid: 1e39c3a937c76be43b6c7831efe93aef, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2011,7 @@ MonoBehaviour:
   - {fileID: 1806845195}
   _child: {fileID: 1441972122}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: bb9b854d62b2f304e8e9e97851a9ee8c, type: 3}
+    _scenarioData: {fileID: 4900000, guid: bb9b854d62b2f304e8e9e97851a9ee8c, type: 3}
 --- !u!114 &1156564255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2483,7 +2483,7 @@ MonoBehaviour:
   - {fileID: 971876375}
   _child: {fileID: 0}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: c5aaf1d71172af04489d2a85b7330d09, type: 3}
+    _scenarioData: {fileID: 4900000, guid: c5aaf1d71172af04489d2a85b7330d09, type: 3}
 --- !u!114 &1441972122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2800,7 +2800,7 @@ MonoBehaviour:
   - {fileID: 1796207837}
   _child: {fileID: 1268138134}
   _commandRunner:
-    _commandData: {fileID: 4900000, guid: fb3ffa21fe338fc4c81374107cec4442, type: 3}
+    _scenarioData: {fileID: 4900000, guid: fb3ffa21fe338fc4c81374107cec4442, type: 3}
 --- !u!1 &1723739002
 GameObject:
   m_ObjectHideFlags: 0

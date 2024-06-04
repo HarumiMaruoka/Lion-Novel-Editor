@@ -1,4 +1,4 @@
-using Glib.NovelGameEditor.Scenario.Commands;
+using Glib.NovelGameEditor.Scenario;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,18 +46,16 @@ namespace Glib.NovelGameEditor
         }
         #endregion
 
-        [SerializeField]
-        private CommandRunner _commandRunner;
+        [SerializeField] private ScenarioRunner _commandRunner;
 
         public override void Initialize(NovelGameController controller)
         {
             _controller = controller;
-            _commandRunner.Initialize(controller);
         }
 
         public override void OnEnter()
         {
-            _commandRunner.Play();
+            _commandRunner.RunScenario(_controller.Config);
         }
 
         public override void OnUpdate()

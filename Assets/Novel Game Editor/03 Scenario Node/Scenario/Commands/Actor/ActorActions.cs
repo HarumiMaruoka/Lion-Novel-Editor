@@ -1,13 +1,33 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
 {
-    public static class ActorExtensions
+    public static class ActorActions
     {
-        public static async UniTask Move(this Actor actor, Config config, string[] args)
+        public static async UniTask RunAction(Config config, string[] commandArgs)
+        {
+            var actor = config.FindActor((ActorType)Enum.Parse(typeof(ActorType), commandArgs[0]));
+            var actionType = commandArgs[1].Trim();
+
+            switch (actionType)
+            {
+                case "Move": await Move(actor, config, commandArgs[2..]); break;
+                case "Rotate": await Rotate(actor, config, commandArgs[2..]); break;
+                case "Scale": await Scale(actor, config, commandArgs[2..]); break;
+                case "PlayAnimation": await PlayAnimation(actor, config, commandArgs[2..]); break;
+                case "ChangeSprite": await ChangeSprite(actor, config, commandArgs[2..]); break;
+                case "Flip": await Flip(actor, config, commandArgs[2..]); break;
+                case "Fade": await Fade(actor, config, commandArgs[2..]); break;
+                case "Shake": await Shake(actor, config, commandArgs[2..]); break;
+                case "Jump": await Jump(actor, config, commandArgs[2..]); break;
+                case "Reaction": await Reaction(actor, config, commandArgs[2..]); break;
+                default: Debug.Log($"{actionType} is missing."); break;
+            }
+        }
+
+        public static async UniTask Move(Actor actor, Config config, string[] args)
         {
             var from = actor.RectTransform.anchoredPosition;
             var to = new Vector2(float.Parse(args[0]), float.Parse(args[1]));
@@ -30,7 +50,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.RectTransform.anchoredPosition = to;
         }
 
-        public static async UniTask Rotate(this Actor actor, Config config, string[] args)
+        public static async UniTask Rotate(Actor actor, Config config, string[] args)
         {
             var from = actor.RectTransform.localEulerAngles;
             var to = new Vector3(0, 0, float.Parse(args[0]));
@@ -53,7 +73,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.RectTransform.localEulerAngles = to;
         }
 
-        public static async UniTask Scale(this Actor actor, Config config, string[] args)
+        public static async UniTask Scale(Actor actor, Config config, string[] args)
         {
             var from = actor.RectTransform.localScale;
             var to = new Vector3(float.Parse(args[0]), float.Parse(args[1]), 1);
@@ -75,7 +95,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.RectTransform.localScale = to;
         }
 
-        public static async UniTask PlayAnimation(this Actor actor, Config config, string[] args)
+        public static async UniTask PlayAnimation(Actor actor, Config config, string[] args)
         {
             var animationName = args[0];
             actor.Animator.Play(animationName);
@@ -89,7 +109,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             }
         }
 
-        public static async UniTask ChangeSprite(this Actor actor, Config config, string[] args)
+        public static async UniTask ChangeSprite(Actor actor, Config config, string[] args)
         {
             var index = int.Parse(args[0]);
             var duration = float.Parse(args[1]);
@@ -124,7 +144,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.ActorBackView.color = new Color(actor.ActorBackView.color.r, actor.ActorBackView.color.g, actor.ActorBackView.color.b, 0);
         }
 
-        public static async UniTask Flip(this Actor actor, Config config, string[] args)
+        public static async UniTask Flip(Actor actor, Config config, string[] args)
         {
             var direction = args[0] == "right" || args[0] == "Right" ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
             var duration = float.Parse(args[1]);
@@ -148,7 +168,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.RectTransform.localRotation = to;
         }
 
-        public static async UniTask Fade(this Actor actor, Config config, string[] args)
+        public static async UniTask Fade(Actor actor, Config config, string[] args)
         {
             var targetAlpha = float.Parse(args[0]);
             var duration = float.Parse(args[1]);
@@ -174,7 +194,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.ActorFrontView.color = new Color(actor.ActorFrontView.color.r, actor.ActorFrontView.color.g, actor.ActorFrontView.color.b, to);
         }
 
-        public static async UniTask Shake(this Actor actor, Config config, string[] args)
+        public static async UniTask Shake(Actor actor, Config config, string[] args)
         {
             var power = float.Parse(args[0]);
             var duration = float.Parse(args[1]);
@@ -238,7 +258,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             Scale = 4,
         }
 
-        public static async UniTask Jump(this Actor actor, Config config, string[] args)
+        public static async UniTask Jump(Actor actor, Config config, string[] args)
         {
             var from = actor.RectTransform.anchoredPosition;
             var to = new Vector2(float.Parse(args[0]), float.Parse(args[1])); // –Ú“I’n
@@ -263,7 +283,7 @@ namespace Glib.NovelGameEditor.Scenario.Commands.ActorActions
             actor.RectTransform.anchoredPosition = to;
         }
 
-        public static async UniTask Reaction(this Actor actor, Config config, string[] args)
+        public static async UniTask Reaction(Actor actor, Config config, string[] args)
         {
             var reactionName = args[0].Trim();
             var reaction = Array.Find(actor.Reactions, r => r.ReactionName == reactionName);
